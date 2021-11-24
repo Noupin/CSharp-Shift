@@ -1,8 +1,8 @@
 ﻿{
   "profiles": {
-    "Shift.Server": {
+    "Shift.Proxy": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:3000",
+      "applicationUrl": "https://localhost:443;http://localhost:80",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
