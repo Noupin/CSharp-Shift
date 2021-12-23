@@ -7,7 +7,7 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllers();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(swagger => swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Shift.Server.xml")));
 
         var app = builder.Build();
 
