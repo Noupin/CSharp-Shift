@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Shift.Server;
 
 public static class Program
@@ -6,7 +8,7 @@ public static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         builder.Services.AddSwaggerGen(swagger => swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Shift.Server.xml")));
 
         var app = builder.Build();

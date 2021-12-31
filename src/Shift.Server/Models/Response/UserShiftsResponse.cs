@@ -1,11 +1,15 @@
-﻿namespace Shift.Server.Models.Response
+﻿using Shift.Server.Models.SQL;
+using System.ComponentModel.DataAnnotations;
+
+namespace Shift.Server.Models.Response
 {
     /// <summary>
     /// The User Shifts Response Data Model for the Shift API
     /// </summary>
     public class UserShiftsResponse
     {
-        public List<SQL.Shift> Shifts { get; set; }
+        [Required]
+        public List<ShiftSQL> Shifts { get; set; }
 
     }
 

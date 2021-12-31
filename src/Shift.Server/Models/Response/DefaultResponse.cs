@@ -5,6 +5,7 @@
     /// </summary>
     public class DefaultResponse
     {
+        // Chnage to problem details
         public string Msg { get; set; } = "";
     }
 }

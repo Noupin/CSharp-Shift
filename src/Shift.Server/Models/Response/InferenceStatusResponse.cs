@@ -5,10 +5,10 @@
     /// </summary>
     public class InferenceStatusResponse : DefaultResponse
     {
-        public string BaseMediaFilename { get; set; }
-        public string MaskMediaFilename { get; set; }
-        public string MediaFilename { get; set; }
-        public bool? Stopped { get; set; } = false;
+        public string? BaseMediaFilename { get; set; }
+        public string? MaskMediaFilename { get; set; }
+        public string? MediaFilename { get; set; }
+        public bool Stopped { get; set; } = false;
 
     }
 

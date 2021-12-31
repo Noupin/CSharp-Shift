@@ -1,9 +1,14 @@
-﻿namespace Shift.Server.Models.Response
+﻿using Shift.Server.Models.SQL;
+using System.ComponentModel.DataAnnotations;
+
+namespace Shift.Server.Models.Response
 {
     public class IndividualShiftGetResponse
     {
-        public bool Owner { get; set; }
-        public SQL.Shift Shift { get; set; }
+        [Required]
+        public bool Owner { get; set; } = false;
+        [Required]
+        public ShiftSQL Shift { get; set; }
 
     }
 }

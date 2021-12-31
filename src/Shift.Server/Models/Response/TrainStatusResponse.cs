@@ -6,9 +6,7 @@
     public class TrainStatusResponse : DefaultResponse
     {
         public List<string> Exhibit { get; set; }
-        public bool? Stopped { get; set; } = false;
+        public bool Stopped { get; set; } = false;
 
     }
-
-
 }
