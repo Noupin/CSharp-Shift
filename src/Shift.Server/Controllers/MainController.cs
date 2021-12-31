@@ -9,9 +9,9 @@ namespace Shift.Server.Controllers
 
     public class Controller : ControllerBase
     {
-        private IController _implementation;
+        private IService _implementation;
 
-        public Controller(IController implementation)
+        public Controller(IService implementation)
         {
             _implementation = implementation;
         }
