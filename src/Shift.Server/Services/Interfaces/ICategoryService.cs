@@ -1,6 +1,6 @@
 ﻿using Shift.Server.Models.Response;
 
-namespace Shift.Server.Controllers
+namespace Shift.Server.Services
 {
     public interface ICategoryService
     {
