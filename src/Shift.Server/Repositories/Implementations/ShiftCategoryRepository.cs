@@ -10,9 +10,19 @@ namespace Shift.Server.Repositories.Implementations
         {
         }
 
-        public Task<ShiftCategorySQL?> ReadAsync(Guid id)
+        public Task<ShiftCategorySQL?> ReadWhereAsync(string name)
         {
-            return ReadAsync((shiftCategory) => shiftCategory.Id.Equals(id));
+            return ReadWhereAsync((shiftCategory) => shiftCategory.CategoryName.Equals(name));
+        }
+
+        public Task<IEnumerable<ShiftCategorySQL>?> ReadWhereAsync(string name, int page, int pageSize)
+        {
+            return ReadWhereAsync((shiftCategory) => shiftCategory.CategoryName.Equals(name), page, pageSize);
+        }
+
+        public Task<IEnumerable<ShiftCategorySQL>?> ReadWhereAsync(Guid id, int page, int pageSize)
+        {
+            return ReadWhereAsync((shiftCategory) => shiftCategory.ShiftId.Equals(id), page, pageSize);
         }
 
         //Doesn't Need Partial Update Implemented

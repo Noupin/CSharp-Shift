@@ -10,14 +10,19 @@ namespace Shift.Server.Repositories.Implementations
         {
         }
 
-        public Task<CategorySQL?> ReadAsync(string name)
+        public Task<CategorySQL?> ReadWhereAsync(string name)
         {
-            return ReadAsync((category) => category.Name == name);
+            return ReadWhereAsync((category) => category.Name.Equals(name));
+        }
+
+        public Task<IEnumerable<CategorySQL>?> ReadOrderByAsync(int page, int pageSize)
+        {
+            return ReadOrderByAsync((category) => category.Name, page, pageSize);
         }
 
         public Task UpdateNameAsync(string name, string newName)
         {
-            return PartialUpdateAsync((category) => category.Name == name,
+            return PartialUpdateAsync((category) => category.Name.Equals(name),
                 (category) => category.Name = newName);
         }
     }

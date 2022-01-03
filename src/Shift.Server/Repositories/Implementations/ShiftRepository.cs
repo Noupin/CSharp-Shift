@@ -11,9 +11,24 @@ namespace Shift.Server.Repositories.Implementations
         {
         }
 
-        public Task<ShiftSQL?> ReadAsync(Guid id)
+        public Task<ShiftSQL?> ReadWhereAsync(Guid id)
         {
-            return ReadAsync((shift) => shift.Id.Equals(id));
+            return ReadWhereAsync((shift) => shift.Id.Equals(id));
+        }
+
+        public Task<ShiftSQL?> ReadWhereAsync(Func<ShiftSQL, bool> query, int page, int pageSize)
+        {
+            return ReadWhereAsync(query, page, pageSize);
+        }
+
+        public Task<IEnumerable<ShiftSQL>?> ReadNewAsync(int page)
+        {
+            return ReadOrderByAsync((shift) => shift.DateCreated, page, Constants.NumberOfNewShifts);
+        }
+
+        public Task<IEnumerable<ShiftSQL>?> ReadPopularAsync(int page)
+        {
+            return ReadOrderByDescendingAsync((shift) => shift.Views, page, Constants.NumberOfPopularShifts);
         }
 
         public Task PartialUpdateAsync(Guid id, ShiftPartialUpdate fields)

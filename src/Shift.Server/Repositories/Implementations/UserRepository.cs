@@ -11,9 +11,9 @@ namespace Shift.Server.Repositories.Implementations
         {
         }
 
-        public Task<UserSQL?> ReadAsync(Guid id)
+        public Task<UserSQL?> ReadWhereAsync(Guid id)
         {
-            return ReadAsync((user) => user.Id.Equals(id));
+            return ReadWhereAsync((user) => user.Id.Equals(id));
         }
 
         public Task PartialUpdateAsync(Guid id, UserPartialUpdate fields)
