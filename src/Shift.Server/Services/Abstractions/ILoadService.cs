@@ -1,7 +1,7 @@
 ﻿using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
 
-namespace Shift.Server.Services
+namespace Shift.Server.Services.Abstractions
 {
     public interface ILoadService
     {

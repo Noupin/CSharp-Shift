@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
+using Shift.Server.Services.Interfaces;
 
 namespace Shift.Server.Controllers
 {
@@ -9,11 +10,11 @@ namespace Shift.Server.Controllers
 
     public class ShiftController : ControllerBase
     {
-        private IShiftService _implementation;
+        private IShiftService _shiftService;
 
-        public ShiftController(IShiftService implementation)
+        public ShiftController(IShiftService shiftService)
         {
-            _implementation = implementation;
+            _shiftService = shiftService;
         }
 
         /// <returns>The status message pertaing to the delete.</returns>
@@ -21,7 +22,7 @@ namespace Shift.Server.Controllers
         public Task<IndividualShiftDeleteResponse> DeleteIndivdualShift(string uuid)
         {
 
-            return _implementation.DeleteIndivdualShiftAsync(uuid);
+            return _shiftService.DeleteIndivdualShiftAsync(uuid);
         }
 
         /// <returns>The requested shift.</returns>
@@ -29,7 +30,7 @@ namespace Shift.Server.Controllers
         public Task<IndividualShiftGetResponse> GetIndivdualShift(string uuid)
         {
 
-            return _implementation.GetIndivdualShiftAsync(uuid);
+            return _shiftService.GetIndivdualShiftAsync(uuid);
         }
 
         /// <param name="body">The field name and updated value to update the queried shift.</param>
@@ -38,7 +39,7 @@ namespace Shift.Server.Controllers
         public Task<IndividualShiftPatchResponse> PatchIndivdualShift(string uuid, [FromBody] IndividualShiftPatchRequest body)
         {
 
-            return _implementation.PatchIndivdualShiftAsync(uuid, body);
+            return _shiftService.PatchIndivdualShiftAsync(uuid, body);
         }
     }
 }

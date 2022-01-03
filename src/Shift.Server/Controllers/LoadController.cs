@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
+using Shift.Server.Services.Interfaces;
 
 namespace Shift.Server.Controllers
 {
@@ -9,11 +10,11 @@ namespace Shift.Server.Controllers
 
     public class LoadController : ControllerBase
     {
-        private ILoadService _implementation;
+        private ILoadService _loadService;
 
-        public LoadController(ILoadService implementation)
+        public LoadController(ILoadService loadService)
         {
-            _implementation = implementation;
+            _loadService = loadService;
         }
 
         /// <returns>Given training data Shift specializes a model for the training data. Yeilds more relaisitic results than just an inference though it takes longer.</returns>
@@ -21,7 +22,7 @@ namespace Shift.Server.Controllers
         public Task<LoadDataResponse> LoadData([FromHeader] LoadDataHeaderRequest head, LoadDataBodyRequest body)
         {
 
-            return _implementation.LoadDataAsync(head, body);
+            return _loadService.LoadDataAsync(head, body);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Server.Models.Response;
+using Shift.Server.Services.Interfaces;
 
 namespace Shift.Server.Controllers
 {
@@ -8,11 +9,11 @@ namespace Shift.Server.Controllers
 
     public class CategoryController : ControllerBase
     {
-        private ICategoryService _implementation;
+        private ICategoryService _categoryService;
 
-        public CategoryController(ICategoryService implementation)
+        public CategoryController(ICategoryService categoryService)
         {
-            _implementation = implementation;
+            _categoryService = categoryService;
         }
 
         /// <returns>The newest shifts.</returns>
@@ -20,7 +21,7 @@ namespace Shift.Server.Controllers
         public Task<NewShiftsResponse> New()
         {
 
-            return _implementation.NewAsync();
+            return _categoryService.NewAsync();
         }
 
         /// <returns>The category names for the requested amount of categories.</returns>
@@ -28,7 +29,7 @@ namespace Shift.Server.Controllers
         public Task<CategoriesResponse> Categories([FromQuery] int page)
         {
 
-            return _implementation.CategoriesAsync(page);
+            return _categoryService.CategoriesAsync(page);
         }
 
         /// <returns>The top 10 most popular shifts.</returns>
@@ -36,7 +37,7 @@ namespace Shift.Server.Controllers
         public Task<PopularShiftsResponse> Popular()
         {
 
-            return _implementation.PopularAsync();
+            return _categoryService.PopularAsync();
         }
 
         /// <returns>The shifts for the queried category.</returns>
@@ -44,7 +45,7 @@ namespace Shift.Server.Controllers
         public Task<ShiftCategoryResponse> Category([FromQuery] int page, string categoryName)
         {
 
-            return _implementation.CategoryAsync(page, categoryName);
+            return _categoryService.CategoryAsync(page, categoryName);
         }
     }
 }

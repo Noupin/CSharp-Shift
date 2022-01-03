@@ -1,7 +1,8 @@
 ﻿using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
+using Shift.Server.Services.Abstractions;
 
-namespace Shift.Server.Services
+namespace Shift.Server.Services.Implementations
 {
     public class InferenceService : IInferenceService
     {

@@ -10,10 +10,8 @@ namespace Shift.Server.Context
         public DbSet<ShiftSQL> Shifts { get; set; }
         public DbSet<UserSQL> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ShiftContext(DbContextOptions<ShiftContext> shiftContext) : base(shiftContext)
         {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
         }
     }
 }

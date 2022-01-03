@@ -7,6 +7,7 @@ namespace Shift.Server.Models.SQL
     /// </summary>
     public class CategorySQL
     {
+        public Guid Id { get; set; }
         [Required]
         [StringLength(Constants.MaximumShiftCategoryTitleLength)]
         public string Name { get; set; }

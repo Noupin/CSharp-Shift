@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
+using Shift.Server.Services.Interfaces;
 
 namespace Shift.Server.Controllers
 {
@@ -9,11 +10,11 @@ namespace Shift.Server.Controllers
 
     public class InferenceController : ControllerBase
     {
-        private IInferenceService _implementation;
+        private IInferenceService _inferenceService;
 
-        public InferenceController(IInferenceService implementation)
+        public InferenceController(IInferenceService inferenceService)
         {
-            _implementation = implementation;
+            _inferenceService = inferenceService;
         }
 
         /// <param name="body">The uuid of the shift model being inferenced with, whether or not to use the pre trained model(PTM), and if using a prebuilt shift model the uuid of that shift.</param>
@@ -22,14 +23,14 @@ namespace Shift.Server.Controllers
         public Task<InferenceResponse> Inference([FromBody] InferenceRequest body)
         {
 
-            return _implementation.InferenceAsync(body);
+            return _inferenceService.InferenceAsync(body);
         }
 
         [HttpGet, Route("inference/content/{filename}", Name = "inferenceCDN")]
         public Task<object> InferenceCDN(string filename)
         {
 
-            return _implementation.InferenceCDNAsync(filename);
+            return _inferenceService.InferenceCDNAsync(filename);
         }
 
         /// <param name="body">The uuid of the shift model being inferenced with, whether or not to use the pre trained model(PTM), and if using a prebuilt shift model the uuid of that shift.</param>
@@ -38,7 +39,7 @@ namespace Shift.Server.Controllers
         public Task<InferenceStatusResponse> InferenceStatus([FromBody] InferenceRequest body)
         {
 
-            return _implementation.InferenceStatusAsync(body);
+            return _inferenceService.InferenceStatusAsync(body);
         }
     }
 }

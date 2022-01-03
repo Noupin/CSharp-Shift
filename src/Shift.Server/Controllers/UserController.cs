@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
+using Shift.Server.Services.Interfaces;
 
 namespace Shift.Server.Controllers
 {
@@ -9,11 +10,11 @@ namespace Shift.Server.Controllers
 
     public class UserController : ControllerBase
     {
-        private IUserService _implementation;
+        private IUserService _userService;
 
-        public UserController(IUserService implementation)
+        public UserController(IUserService userService)
         {
-            _implementation = implementation;
+            _userService = userService;
         }
 
         /// <returns>The shifts for the user who is logged in.</returns>
@@ -21,7 +22,7 @@ namespace Shift.Server.Controllers
         public Task<UserShiftsResponse> UserShifts([FromQuery] int page, string username)
         {
 
-            return _implementation.UserShiftsAsync(page, username);
+            return _userService.UserShiftsAsync(page, username);
         }
 
         /// <returns>The status message pertaing to the delete.</returns>
@@ -29,7 +30,7 @@ namespace Shift.Server.Controllers
         public Task<IndividualUserDeleteResponse> DeleteIndivdualUser(string username)
         {
 
-            return _implementation.DeleteIndivdualUserAsync(username);
+            return _userService.DeleteIndivdualUserAsync(username);
         }
 
         /// <returns>The requested user.</returns>
@@ -37,7 +38,7 @@ namespace Shift.Server.Controllers
         public Task<IndividualUserGetResponse> GetIndivdualUser(string username)
         {
 
-            return _implementation.GetIndivdualUserAsync(username);
+            return _userService.GetIndivdualUserAsync(username);
         }
 
         /// <param name="body">The field name and updated value to update the queried user.</param>
@@ -46,7 +47,7 @@ namespace Shift.Server.Controllers
         public Task<IndividualUserPatchResponse> PatchIndivdualUser(string username, [FromBody] IndividualUserPatchRequest body)
         {
 
-            return _implementation.PatchIndivdualUserAsync(username, body);
+            return _userService.PatchIndivdualUserAsync(username, body);
         }
     }
 }

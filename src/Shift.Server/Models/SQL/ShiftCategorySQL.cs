@@ -12,10 +12,12 @@ namespace Shift.Server.Models.SQL
 
         [Required]
         public Guid ShiftId { get; set; }
-        public List<ShiftSQL> Shift { get; set; }
+        [Required]
+        public ShiftSQL Shift { get; set; }
 
         [Required]
         public string CategoryName { get; set; }
-        public List<CategorySQL> Category { get; set; }
+        [Required]
+        public CategorySQL Category { get; set; }
     }
 }
