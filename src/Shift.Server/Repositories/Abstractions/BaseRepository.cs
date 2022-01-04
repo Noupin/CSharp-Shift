@@ -1,15 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shift.Server.Context;
 
 namespace Shift.Server.Repositories.Abstractions
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
+    public abstract class BaseRepository<T, U> : IBaseRepository<T> where T : class where U : DbContext
     {
-        protected readonly ShiftContext _context;
+        protected readonly U _context;
         protected readonly DbSet<T> _table;
 
 
-        public BaseRepository(ShiftContext context, DbSet<T> table)
+        public BaseRepository(U context, DbSet<T> table)
         {
             _context = context;
             _table = table;
