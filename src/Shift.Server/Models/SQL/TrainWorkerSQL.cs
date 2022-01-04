@@ -24,17 +24,15 @@ namespace Shift.Server.Models.SQL
         public bool ImagesUpdated { get; set; } = false;
 
         [Required]
-        public string ExhibitImages
+        public string ExhibitImages { get; set; } = "";
+        [NotMapped]
+        public string[] ExhibitImageArray
         {
-            get { return ExhibitImages; }
-            set
+            get
             {
-                ExhibitImages = $"{ExhibitImages};{value}";
-                ExhibitImageArray = ExhibitImages.Split(";");
+                return ExhibitImages.Split(';');
             }
         }
-        [NotMapped]
-        public string[] ExhibitImageArray { get; set; }
 
         [Required]
         public TStatus WorkerStatus { get; set; } = TStatus.Pending;

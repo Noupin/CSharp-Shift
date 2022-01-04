@@ -9,6 +9,8 @@ namespace Shift.Server.Context
         public DbSet<ShiftCategorySQL> ShiftCategories { get; set; }
         public DbSet<ShiftSQL> Shifts { get; set; }
         public DbSet<UserSQL> Users { get; set; }
+        public DbSet<InferenceWorkerSQL> InferenceWorkers { get; set; }
+        public DbSet<TrainWorkerSQL> TrainWorkers { get; set; }
 
         public ShiftContext(DbContextOptions<ShiftContext> shiftContext) : base(shiftContext)
         {
