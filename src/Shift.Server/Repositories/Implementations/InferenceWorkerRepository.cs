@@ -21,7 +21,6 @@ namespace Shift.Server.Repositories.Implementations
             return PartialUpdateAsync((worker) => worker.ShiftId.Equals(id),
                 (worker) =>
                 {
-                    worker.ShiftId = fields.ShiftId ?? worker.ShiftId;
                     worker.MediaFilename = fields.MediaFilename ?? worker.MediaFilename;
                     worker.BaseMediaFilename = fields.BaseMediaFilename ?? worker.BaseMediaFilename;
                     worker.WorkerStatus = fields.WorkerStatus ?? worker.WorkerStatus;

@@ -21,7 +21,6 @@ namespace Shift.Server.Repositories.Implementations
             return PartialUpdateAsync((worker) => worker.ShiftId.Equals(id),
                 (worker) =>
                 {
-                    worker.ShiftId = fields.ShiftId ?? worker.ShiftId;
                     worker.Training = fields.Training ?? worker.Training;
                     worker.Inferencing = fields.Inferencing ?? worker.Inferencing;
                     worker.ImagesUpdated = fields.ImagesUpdated ?? worker.ImagesUpdated;

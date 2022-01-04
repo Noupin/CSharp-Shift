@@ -4,7 +4,6 @@ namespace Shift.Server.Models.Abstractions
 {
     public class TrainWorkerPartialUpdate
     {
-        public Guid? ShiftId { get; set; }
         public bool? Training { get; set; }
         public bool? Inferencing { get; set; }
         public bool? ImagesUpdated { get; set; }

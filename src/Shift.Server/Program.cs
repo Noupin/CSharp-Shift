@@ -4,8 +4,8 @@ using Shift.Server.Middleware;
 using Shift.Server.Models.SQL;
 using Shift.Server.Repositories.Abstractions;
 using Shift.Server.Repositories.Implementations;
+using Shift.Server.Services.Abstractions;
 using Shift.Server.Services.Implementations;
-using Shift.Server.Services.Interfaces;
 using System.Text.Json.Serialization;
 
 namespace Shift.Server;
