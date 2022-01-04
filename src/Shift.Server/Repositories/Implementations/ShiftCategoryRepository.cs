@@ -4,7 +4,7 @@ using Shift.Server.Repositories.Abstractions;
 
 namespace Shift.Server.Repositories.Implementations
 {
-    public class ShiftCategoryRepository : BaseRepository<ShiftCategorySQL>
+    public class ShiftCategoryRepository : BaseRepository<ShiftCategorySQL, ShiftContext>
     {
         public ShiftCategoryRepository(ShiftContext context) : base(context, context.ShiftCategories)
         {

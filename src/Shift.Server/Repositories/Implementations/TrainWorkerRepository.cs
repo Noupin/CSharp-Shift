@@ -5,7 +5,7 @@ using Shift.Server.Repositories.Abstractions;
 
 namespace Shift.Server.Repositories.Implementations
 {
-    public class TrainWorkerRepository : BaseRepository<TrainWorkerSQL>
+    public class TrainWorkerRepository : BaseRepository<TrainWorkerSQL, ShiftContext>
     {
         public TrainWorkerRepository(ShiftContext context) : base(context, context.TrainWorkers)
         {

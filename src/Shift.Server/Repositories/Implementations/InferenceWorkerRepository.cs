@@ -5,7 +5,7 @@ using Shift.Server.Repositories.Abstractions;
 
 namespace Shift.Server.Repositories.Implementations
 {
-    public class InferenceWorkerRepository : BaseRepository<InferenceWorkerSQL>
+    public class InferenceWorkerRepository : BaseRepository<InferenceWorkerSQL, ShiftContext>
     {
         public InferenceWorkerRepository(ShiftContext context) : base(context, context.InferenceWorkers)
         {

@@ -5,7 +5,7 @@ using Shift.Server.Repositories.Abstractions;
 
 namespace Shift.Server.Repositories.Implementations
 {
-    public class ShiftRepository : BaseRepository<ShiftSQL>
+    public class ShiftRepository : BaseRepository<ShiftSQL, ShiftContext>
     {
         public ShiftRepository(ShiftContext context) : base(context, context.Shifts)
         {
