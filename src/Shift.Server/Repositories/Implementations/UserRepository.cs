@@ -7,13 +7,29 @@ namespace Shift.Server.Repositories.Implementations
 {
     public class UserRepository : BaseRepository<UserSQL, ShiftContext>
     {
-        public UserRepository(ShiftContext context) : base(context, context.Users)
+        private readonly FeryvUserRepository _feryvUserRepository;
+
+        public UserRepository(ShiftContext context, FeryvUserRepository feryvUserRepository) : base(context, context.Users)
         {
+            _feryvUserRepository = feryvUserRepository;
         }
 
-        public Task<UserSQL?> ReadWhereAsync(Guid id)
+        public async Task<UserSQL?> ReadWhereAsync(Guid id)
         {
-            return ReadWhereAsync((user) => user.Id.Equals(id));
+            var feryvUser = await _feryvUserRepository.ReadWhereAsync(id);
+            var user = await ReadWhereAsync((user) => user.Id.Equals(id));
+            user.FeryvUser = feryvUser;
+
+            return user;
+        }
+
+        public async Task<UserSQL?> ReadWhereAsync(string username)
+        {
+            var feryvUser = await _feryvUserRepository.ReadWhereAsync(username);
+            var user = await ReadWhereAsync((user) => user.Id.Equals(username));
+            user.FeryvUser = feryvUser;
+
+            return user;
         }
 
         public Task PartialUpdateAsync(Guid id, UserPartialUpdate fields)

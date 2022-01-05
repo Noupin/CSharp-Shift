@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shift.Server.Models.SQL
 {
@@ -15,6 +16,9 @@ namespace Shift.Server.Models.SQL
         public bool CanTrain { get; set; }
         [Required]
         public bool Verified { get; set; }
-        public List<ShiftSQL> shifts { get; set; }
+        public List<ShiftSQL> Shifts { get; set; }
+
+        [NotMapped]
+        public FeryvUserSQL FeryvUser { get; set; }
     }
 }
