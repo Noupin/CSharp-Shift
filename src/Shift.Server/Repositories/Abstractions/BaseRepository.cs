@@ -31,8 +31,7 @@ namespace Shift.Server.Repositories.Abstractions
                 .AsQueryable()
                 .FirstOrDefaultAsync();
         }
-
-        public async Task<IEnumerable<T>?> ReadWhereAsync(Func<T, bool> query, int page, int pageSize)
+        public async Task<List<T>?> ReadWhereAsync(Func<T, bool> query, int page, int pageSize)
         {
             return await _table
                 .Where(query)
@@ -49,7 +48,7 @@ namespace Shift.Server.Repositories.Abstractions
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>?> ReadOrderByAsync<U>(Func<T, U> query, int page, int pageSize)
+        public async Task<List<T>?> ReadOrderByAsync<U>(Func<T, U> query, int page, int pageSize)
         {
             return await _table
                 .OrderBy(query)
@@ -67,10 +66,18 @@ namespace Shift.Server.Repositories.Abstractions
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>?> ReadOrderByDescendingAsync<U>(Func<T, U> query, int page, int pageSize)
+        public async Task<List<T>?> ReadOrderByDescendingAsync<U>(Func<T, U> query, int page, int pageSize)
         {
             return await _table
                 .OrderByDescending(query)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .AsQueryable()
+                .ToListAsync();
+        }
+        public async Task<List<T>?> ReadAllAsync(int page, int pageSize)
+        {
+            return await _table
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .AsQueryable()

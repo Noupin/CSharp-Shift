@@ -21,12 +21,12 @@ namespace Shift.Server.Repositories.Implementations
             return ReadWhereAsync(query, page, pageSize);
         }
 
-        public Task<IEnumerable<ShiftSQL>?> ReadNewAsync(int page)
+        public Task<List<ShiftSQL>?> ReadNewAsync(int page = 0)
         {
             return ReadOrderByAsync((shift) => shift.DateCreated, page, Constants.NumberOfNewShifts);
         }
 
-        public Task<IEnumerable<ShiftSQL>?> ReadPopularAsync(int page)
+        public Task<List<ShiftSQL>?> ReadPopularAsync(int page = 0)
         {
             return ReadOrderByDescendingAsync((shift) => shift.Views, page, Constants.NumberOfPopularShifts);
         }

@@ -15,12 +15,12 @@ namespace Shift.Server.Repositories.Implementations
             return ReadWhereAsync((shiftCategory) => shiftCategory.CategoryName.Equals(name));
         }
 
-        public Task<IEnumerable<ShiftCategorySQL>?> ReadWhereAsync(string name, int page, int pageSize)
+        public Task<List<ShiftCategorySQL>?> ReadWhereAsync(string name, int page, int pageSize)
         {
             return ReadWhereAsync((shiftCategory) => shiftCategory.CategoryName.Equals(name), page, pageSize);
         }
 
-        public Task<IEnumerable<ShiftCategorySQL>?> ReadWhereAsync(Guid id, int page, int pageSize)
+        public Task<List<ShiftCategorySQL>?> ReadWhereAsync(Guid id, int page, int pageSize)
         {
             return ReadWhereAsync((shiftCategory) => shiftCategory.ShiftId.Equals(id), page, pageSize);
         }

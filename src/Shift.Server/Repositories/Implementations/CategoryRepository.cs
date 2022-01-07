@@ -15,7 +15,7 @@ namespace Shift.Server.Repositories.Implementations
             return ReadWhereAsync((category) => category.Name.Equals(name));
         }
 
-        public Task<IEnumerable<CategorySQL>?> ReadOrderByAsync(int page, int pageSize)
+        public Task<List<CategorySQL>?> ReadOrderByAsync(int page, int pageSize)
         {
             return ReadOrderByAsync((category) => category.Name, page, pageSize);
         }

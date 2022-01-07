@@ -1,50 +1,71 @@
 ﻿using Shift.Server.Models.Response;
 using Shift.Server.Models.SQL;
-using Shift.Server.Repositories.Abstractions;
+using Shift.Server.Repositories.Implementations;
 using Shift.Server.Services.Abstractions;
 
 namespace Shift.Server.Services.Implementations
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IBaseRepository<CategorySQL> _categoryRepository;
+        private readonly CategoryRepository _categoryRepository;
+        private readonly ShiftRepository _shiftRepository;
+        private readonly ShiftCategoryRepository _shiftCategoryRepository;
 
-        public CategoryService(IBaseRepository<CategorySQL> categoryRepository)
+        public CategoryService(CategoryRepository categoryRepository, ShiftRepository shiftRepository, ShiftCategoryRepository shiftCategoryRepository)
         {
             _categoryRepository = categoryRepository;
+            _shiftRepository = shiftRepository;
+            _shiftCategoryRepository = shiftCategoryRepository;
         }
 
         public async Task<NewShiftsResponse> NewAsync()
         {
-            /* Creating Using Repositories
-            var category = new CategorySQL
-            {
-                Name = "Hi"
-            };
-
-            await _categoryRepository.CreateAsync(category);
-
+            var shifts = await _shiftRepository.ReadNewAsync();
             return new NewShiftsResponse
             {
-                Shifts = category.Shifts,
+                Shifts = shifts
             };
-            */
-            throw new NotImplementedException();
         }
 
-        public Task<CategoriesResponse> CategoriesAsync(int page)
+        public async Task<CategoriesResponse> CategoriesAsync(int page)
         {
-            throw new NotImplementedException();
+            var categories = await _categoryRepository.ReadAllAsync(page, Constants.ItemsPerPage);
+            List<string> categoryNames = new List<string>();
+
+            foreach (var category in categories)
+            {
+                categoryNames.Add(category.Name);
+            }
+
+            return new CategoriesResponse
+            {
+                Categories = categoryNames
+            };
         }
 
-        public Task<PopularShiftsResponse> PopularAsync()
+        public async Task<PopularShiftsResponse> PopularAsync()
         {
-            throw new NotImplementedException();
+            var shifts = await _shiftRepository.ReadPopularAsync();
+            return new PopularShiftsResponse
+            {
+                Shifts = shifts
+            };
         }
 
-        public Task<ShiftCategoryResponse> CategoryAsync(int page, string categoryName)
+        public async Task<ShiftCategoryResponse> CategoryAsync(int page, string categoryName)
         {
-            throw new NotImplementedException();
+            var shiftCategories = await _shiftCategoryRepository.ReadWhereAsync(categoryName, page, Constants.ItemsPerPage);
+            var shifts = new List<ShiftSQL>();
+
+            foreach (var shiftCategory in shiftCategories)
+            {
+                shifts.Add(shiftCategory.Shift);
+            }
+
+            return new ShiftCategoryResponse
+            {
+                Shifts = shifts
+            };
         }
     }
 }
