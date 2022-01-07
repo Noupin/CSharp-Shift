@@ -16,9 +16,10 @@ namespace Shift.Server.Repositories.Implementations
             return ReadWhereAsync((shift) => shift.Id.Equals(id));
         }
 
-        public Task<ShiftSQL?> ReadWhereAsync(Func<ShiftSQL, bool> query, int page, int pageSize)
+        public Task<List<ShiftSQL>?> ReadWhereAsync(string username, int page, int pageSize)
         {
-            return ReadWhereAsync(query, page, pageSize);
+            return ReadWhereAsync((shift) => shift.Author.FeryvUser.Username.Equals(username),
+                page, pageSize);
         }
 
         public Task<List<ShiftSQL>?> ReadNewAsync(int page = 0)
