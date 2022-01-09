@@ -2,37 +2,10 @@
 
 namespace Shift.Server.Middleware
 {
-    public class ShiftContextMiddleware : IMiddleware
+    public class ShiftContextMiddleware : BaseContextMiddleware<ShiftContextMiddleware, ShiftContext>
     {
-        private readonly ILogger<ShiftContextMiddleware> _logger;
-        private readonly ShiftContext _shiftContext;
-
-        public ShiftContextMiddleware(ILogger<ShiftContextMiddleware> logger, ShiftContext shiftContext)
+        public ShiftContextMiddleware(ILogger<ShiftContextMiddleware> logger, ShiftContext shiftContext) : base(logger, shiftContext)
         {
-            _logger = logger;
-            _shiftContext = shiftContext;
-        }
-
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
-        {
-            try
-            {
-                await next(context);
-                await _shiftContext.Database.CommitTransactionAsync();
-            }
-            catch
-            {
-                try
-                {
-                    await _shiftContext.Database.RollbackTransactionAsync();
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e, "Unable to rollback transaction.");
-                }
-
-                throw;
-            }
         }
     }
 }

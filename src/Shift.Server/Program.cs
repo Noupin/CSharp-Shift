@@ -1,8 +1,6 @@
-using BaseRepository;
 using Microsoft.EntityFrameworkCore;
 using Shift.Server.Context;
 using Shift.Server.Middleware;
-using Shift.Server.Models.SQL;
 using Shift.Server.Repositories.Implementations;
 using Shift.Server.Services.Abstractions;
 using Shift.Server.Services.Implementations;
@@ -20,6 +18,10 @@ public static class Program
         {
             options.UseNpgsql(builder.Configuration.GetConnectionString("ShiftContext"));
         });
+        builder.Services.AddDbContext<FeryvContext>(options =>
+        {
+            options.UseNpgsql(builder.Configuration.GetConnectionString("FeryvContext"));
+        });
         builder.Services.AddControllers().AddJsonOptions(o =>
         {
             o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -30,6 +32,7 @@ public static class Program
         });
 
         builder.Services.AddScoped<ShiftContextMiddleware>();
+        builder.Services.AddScoped<FeryvContextMiddleware>();
 
         builder.Services.AddScoped<ICategoryService, CategoryService>();
         builder.Services.AddScoped<IInferenceService, InferenceService>();
@@ -38,17 +41,18 @@ public static class Program
         builder.Services.AddScoped<ITrainService, TrainService>();
         builder.Services.AddScoped<IUserService, UserService>();
 
-        builder.Services.AddScoped<IBaseRepository<CategorySQL, ShiftContext>, CategoryRepository>();
-        //builder.Services.AddScoped<IBaseRepository<FeryvUserSQL, FeryvContext>, FeryvUserRepository>();
-        builder.Services.AddScoped<IBaseRepository<InferenceWorkerSQL, ShiftContext>, InferenceWorkerRepository>();
-        builder.Services.AddScoped<IBaseRepository<ShiftCategorySQL, ShiftContext>, ShiftCategoryRepository>();
-        builder.Services.AddScoped<IBaseRepository<ShiftSQL, ShiftContext>, ShiftRepository>();
-        builder.Services.AddScoped<IBaseRepository<TrainWorkerSQL, ShiftContext>, TrainWorkerRepository>();
-        builder.Services.AddScoped<IBaseRepository<UserSQL, ShiftContext>, UserRepository>();
+        builder.Services.AddScoped<CategoryRepository>();
+        builder.Services.AddScoped<FeryvUserRepository>();
+        builder.Services.AddScoped<InferenceWorkerRepository>();
+        builder.Services.AddScoped<ShiftCategoryRepository>();
+        builder.Services.AddScoped<ShiftRepository>();
+        builder.Services.AddScoped<TrainWorkerRepository>();
+        builder.Services.AddScoped<UserRepository>();
 
         var app = builder.Build();
 
         app.UseMiddleware<ShiftContextMiddleware>();
+        app.UseMiddleware<FeryvContextMiddleware>();
 
         if (app.Environment.IsDevelopment())
         {
@@ -62,11 +66,16 @@ public static class Program
 
         app.MapControllers();
 
+        //REMOVE FROM PRODUCTION
         using (var scope = app.Services.CreateScope())
         {
             var shiftContext = scope.ServiceProvider.GetRequiredService<ShiftContext>();
             shiftContext.Database.EnsureDeleted();
             shiftContext.Database.Migrate();
+
+            var feryvContext = scope.ServiceProvider.GetRequiredService<FeryvContext>();
+            feryvContext.Database.EnsureDeleted();
+            feryvContext.Database.Migrate();
         }
 
         await app.RunAsync();

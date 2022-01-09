@@ -12,7 +12,7 @@ namespace Shift.Server.Models.SQL
         [Required]
         public Guid ShiftId { get; set; }
         [Required]
-        public DateTimeOffset TimeStarted { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime TimeStarted { get; set; } = DateTime.UtcNow;
         [Required]
         public string MediaFilename { get; set; } = "";
         [Required]

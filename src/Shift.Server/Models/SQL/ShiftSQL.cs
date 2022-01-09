@@ -19,7 +19,7 @@ namespace Shift.Server.Models.SQL
         [StringLength(Constants.MaximumShiftTitleLength)]
         public string Title { get; set; }
         [Required]
-        public DateTimeOffset DateCreated { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         [Required]
         [StringLength(Constants.MaximumFilenameLength)]

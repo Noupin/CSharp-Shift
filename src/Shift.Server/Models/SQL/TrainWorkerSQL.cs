@@ -14,7 +14,7 @@ namespace Shift.Server.Models.SQL
         public Guid ShiftId { get; set; }
 
         [Required]
-        public DateTimeOffset TimeStarted { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime TimeStarted { get; set; } = DateTime.UtcNow;
 
         [Required]
         public bool Training { get; set; } = false;

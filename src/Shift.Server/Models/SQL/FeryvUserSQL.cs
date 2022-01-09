@@ -10,7 +10,7 @@ namespace Shift.Server.Models.SQL
         [Required]
         public Guid Id { get; set; }
         [Required]
-        public DateTimeOffset DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [Required]
         [StringLength(15)]
@@ -30,6 +30,6 @@ namespace Shift.Server.Models.SQL
         [Required]
         public bool Confirmed { get; set; }
 
-        public List<Object> Licenses { get; set; }
+        public List<LicenseSQL> Licenses { get; set; }
     }
 }

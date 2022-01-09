@@ -15,5 +15,12 @@ namespace Shift.Server.Context
         public ShiftContext(DbContextOptions<ShiftContext> shiftContext) : base(shiftContext)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<CategorySQL>()
+                .HasIndex(u => u.Name)
+                .IsUnique();
+        }
     }
 }

@@ -48,20 +48,49 @@ namespace Shift.Server.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<Guid?>("ShiftCategorySQLId")
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Shift.Server.Models.SQL.InferenceWorkerSQL", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("BaseMediaFilename")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ClientStatus")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MediaFilename")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ShiftId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("TimeStarted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("WorkerStatus")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShiftCategorySQLId");
-
-                    b.ToTable("Categories");
+                    b.ToTable("InferenceWorkers");
                 });
 
             modelBuilder.Entity("Shift.Server.Models.SQL.ShiftCategorySQL", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("CategoryName")
@@ -72,6 +101,10 @@ namespace Shift.Server.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ShiftId");
 
                     b.ToTable("ShiftCategories");
                 });
@@ -106,9 +139,6 @@ namespace Shift.Server.Migrations
                     b.Property<bool>("Private")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid?>("ShiftCategorySQLId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -127,9 +157,43 @@ namespace Shift.Server.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("ShiftCategorySQLId");
-
                     b.ToTable("Shifts");
+                });
+
+            modelBuilder.Entity("Shift.Server.Models.SQL.TrainWorkerSQL", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ClientStatus")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ExhibitImages")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("ImagesUpdated")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Inferencing")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ShiftId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("TimeStarted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("Training")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("WorkerStatus")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainWorkers");
                 });
 
             modelBuilder.Entity("Shift.Server.Models.SQL.UserSQL", b =>
@@ -143,6 +207,9 @@ namespace Shift.Server.Migrations
 
                     b.Property<bool>("CanTrain")
                         .HasColumnType("boolean");
+
+                    b.Property<Guid>("FeryvUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("Verified")
                         .HasColumnType("boolean");
@@ -167,38 +234,39 @@ namespace Shift.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Shift.Server.Models.SQL.CategorySQL", b =>
+            modelBuilder.Entity("Shift.Server.Models.SQL.ShiftCategorySQL", b =>
                 {
-                    b.HasOne("Shift.Server.Models.SQL.ShiftCategorySQL", null)
-                        .WithMany("Category")
-                        .HasForeignKey("ShiftCategorySQLId");
-                });
-
-            modelBuilder.Entity("Shift.Server.Models.SQL.ShiftSQL", b =>
-                {
-                    b.HasOne("Shift.Server.Models.SQL.UserSQL", "Author")
-                        .WithMany("shifts")
-                        .HasForeignKey("AuthorId")
+                    b.HasOne("Shift.Server.Models.SQL.CategorySQL", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Shift.Server.Models.SQL.ShiftCategorySQL", null)
-                        .WithMany("Shift")
-                        .HasForeignKey("ShiftCategorySQLId");
+                    b.HasOne("Shift.Server.Models.SQL.ShiftSQL", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("Shift.Server.Models.SQL.ShiftCategorySQL", b =>
-                {
                     b.Navigation("Category");
 
                     b.Navigation("Shift");
                 });
 
+            modelBuilder.Entity("Shift.Server.Models.SQL.ShiftSQL", b =>
+                {
+                    b.HasOne("Shift.Server.Models.SQL.UserSQL", "Author")
+                        .WithMany("Shifts")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("Shift.Server.Models.SQL.UserSQL", b =>
                 {
-                    b.Navigation("shifts");
+                    b.Navigation("Shifts");
                 });
 #pragma warning restore 612, 618
         }
