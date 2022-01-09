@@ -1,7 +1,7 @@
-﻿using Shift.Server.Context;
+﻿using BaseRepository;
+using Shift.Server.Context;
 using Shift.Server.Models.Abstractions;
 using Shift.Server.Models.SQL;
-using Shift.Server.Repositories.Abstractions;
 
 namespace Shift.Server.Repositories.Implementations
 {

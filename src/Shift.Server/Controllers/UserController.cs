@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
-using Shift.Server.Services.Interfaces;
+using Shift.Server.Services.Abstractions;
 
 namespace Shift.Server.Controllers
 {

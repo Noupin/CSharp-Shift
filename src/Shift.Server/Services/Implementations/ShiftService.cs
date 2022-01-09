@@ -1,4 +1,5 @@
-﻿using Shift.Server.Models.Request;
+﻿using Shift.Server.Models.Abstractions;
+using Shift.Server.Models.Request;
 using Shift.Server.Models.Response;
 using Shift.Server.Repositories.Implementations;
 using Shift.Server.Services.Abstractions;
@@ -14,9 +15,9 @@ namespace Shift.Server.Services.Implementations
             _shiftRepository = shiftRepository;
         }
 
-        public async Task<IndividualShiftDeleteResponse> DeleteIndivdualShiftAsync(string uuid)
+        public async Task<IndividualShiftDeleteResponse> DeleteIndivdualShiftAsync(Guid id)
         {
-            var shift = await _shiftRepository.ReadWhereAsync(Guid.Parse(uuid));
+            var shift = await _shiftRepository.ReadWhereAsync(id);
             await _shiftRepository.DeleteAsync(shift);
 
             return new IndividualShiftDeleteResponse
@@ -25,9 +26,9 @@ namespace Shift.Server.Services.Implementations
             };
         }
 
-        public async Task<IndividualShiftGetResponse> GetIndivdualShiftAsync(string uuid)
+        public async Task<IndividualShiftGetResponse> GetIndivdualShiftAsync(Guid id)
         {
-            var shift = await _shiftRepository.ReadWhereAsync(Guid.Parse(uuid));
+            var shift = await _shiftRepository.ReadWhereAsync(id);
 
             return new IndividualShiftGetResponse
             {
@@ -36,9 +37,10 @@ namespace Shift.Server.Services.Implementations
             };
         }
 
-        public async Task<IndividualShiftPatchResponse> PatchIndivdualShiftAsync(string uuid, IndividualShiftPatchRequest body)
+        //May parse Guid from string automatically
+        public async Task<IndividualShiftPatchResponse> PatchIndivdualShiftAsync(Guid id, IndividualShiftPatchRequest body)
         {
-            await _shiftRepository.PartialUpdateAsync(Guid.Parse(uuid), (Models.Abstractions.ShiftPartialUpdate)body);
+            await _shiftRepository.PartialUpdateAsync(id, (ShiftPartialUpdate)body);
 
             return new IndividualShiftPatchResponse
             {

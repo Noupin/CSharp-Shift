@@ -7,18 +7,18 @@ namespace Shift.Server.Services.Abstractions
     {
         /// <returns>The status message pertaing to the delete.</returns>
 
-        Task<IndividualShiftDeleteResponse> DeleteIndivdualShiftAsync(string uuid);
+        Task<IndividualShiftDeleteResponse> DeleteIndivdualShiftAsync(Guid id);
 
 
         /// <returns>The requested shift.</returns>
 
-        Task<IndividualShiftGetResponse> GetIndivdualShiftAsync(string uuid);
+        Task<IndividualShiftGetResponse> GetIndivdualShiftAsync(Guid id);
 
 
         /// <param name="body">The field name and updated value to update the queried shift.</param>
 
         /// <returns>The status message pertaing to the update/modify.</returns>
 
-        Task<IndividualShiftPatchResponse> PatchIndivdualShiftAsync(string uuid, IndividualShiftPatchRequest body);
+        Task<IndividualShiftPatchResponse> PatchIndivdualShiftAsync(Guid id, IndividualShiftPatchRequest body);
     }
 }
