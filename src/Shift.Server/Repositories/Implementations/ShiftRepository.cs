@@ -7,8 +7,11 @@ namespace Shift.Server.Repositories.Implementations
 {
     public class ShiftRepository : BaseRepository<ShiftSQL, ShiftContext>
     {
-        public ShiftRepository(ShiftContext context) : base(context, context.Shifts)
+        private readonly FeryvUserRepository _feryvUserRepository;
+
+        public ShiftRepository(ShiftContext context, FeryvUserRepository feryvUserRepository) : base(context, context.Shifts)
         {
+            _feryvUserRepository = feryvUserRepository;
         }
 
         public Task<ShiftSQL?> ReadWhereAsync(Guid id)
@@ -16,9 +19,10 @@ namespace Shift.Server.Repositories.Implementations
             return ReadWhereAsync((shift) => shift.Id.Equals(id));
         }
 
-        public Task<List<ShiftSQL>?> ReadWhereAsync(string username, int page, int pageSize)
+        public async Task<List<ShiftSQL>?> ReadWhereAsync(string username, int page, int pageSize)
         {
-            return ReadWhereAsync((shift) => shift.Author.FeryvUser.Username.Equals(username),
+            var feryvUser = await _feryvUserRepository.ReadWhereAsync(username);
+            return await ReadWhereAsync((shift) => shift.Author.FeryvUserId.Equals(feryvUser.Id),
                 page, pageSize);
         }
 

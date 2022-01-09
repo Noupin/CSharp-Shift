@@ -1,8 +1,8 @@
+using BaseRepository;
 using Microsoft.EntityFrameworkCore;
 using Shift.Server.Context;
 using Shift.Server.Middleware;
 using Shift.Server.Models.SQL;
-using Shift.Server.Repositories.Abstractions;
 using Shift.Server.Repositories.Implementations;
 using Shift.Server.Services.Abstractions;
 using Shift.Server.Services.Implementations;
@@ -38,7 +38,13 @@ public static class Program
         builder.Services.AddScoped<ITrainService, TrainService>();
         builder.Services.AddScoped<IUserService, UserService>();
 
-        builder.Services.AddScoped<IBaseRepository<CategorySQL>, CategoryRepository>();
+        builder.Services.AddScoped<IBaseRepository<CategorySQL, ShiftContext>, CategoryRepository>();
+        //builder.Services.AddScoped<IBaseRepository<FeryvUserSQL, FeryvContext>, FeryvUserRepository>();
+        builder.Services.AddScoped<IBaseRepository<InferenceWorkerSQL, ShiftContext>, InferenceWorkerRepository>();
+        builder.Services.AddScoped<IBaseRepository<ShiftCategorySQL, ShiftContext>, ShiftCategoryRepository>();
+        builder.Services.AddScoped<IBaseRepository<ShiftSQL, ShiftContext>, ShiftRepository>();
+        builder.Services.AddScoped<IBaseRepository<TrainWorkerSQL, ShiftContext>, TrainWorkerRepository>();
+        builder.Services.AddScoped<IBaseRepository<UserSQL, ShiftContext>, UserRepository>();
 
         var app = builder.Build();
 

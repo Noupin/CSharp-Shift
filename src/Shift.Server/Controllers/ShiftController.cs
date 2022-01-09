@@ -37,6 +37,7 @@ namespace Shift.Server.Controllers
         /// <returns>The status message pertaing to the update/modify.</returns>
         [HttpPatch, Route("shift/{uuid}", Name = "patchIndivdualShift")]
         //uuid used to be string C# may automatically parse to Guid
+        //might need :guid in the Route
         public Task<IndividualShiftPatchResponse> PatchIndivdualShift(Guid uuid, [FromBody] IndividualShiftPatchRequest body)
         {
 
