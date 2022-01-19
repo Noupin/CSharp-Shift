@@ -17,7 +17,7 @@ namespace Shift.Server.Repositories.Implementations
         public async Task<UserSQL?> ReadWhereAsync(Guid id)
         {
             var user = await ReadWhereAsync((user) => user.Id.Equals(id));
-            var feryvUser = await _feryvUserRepository.ReadWhereAsync(user.FeryvUserId);
+            var feryvUser = await _feryvUserRepository.ReadWhereAsync(user.Id);
             user.FeryvUser = feryvUser;
 
             return user;
@@ -26,7 +26,7 @@ namespace Shift.Server.Repositories.Implementations
         public async Task<UserSQL?> ReadWhereAsync(string username)
         {
             var feryvUser = await _feryvUserRepository.ReadWhereAsync(username);
-            var user = await ReadWhereAsync((user) => user.FeryvUserId.Equals(feryvUser.Id));
+            var user = await ReadWhereAsync((user) => user.Id.Equals(feryvUser.Id));
             user.FeryvUser = feryvUser;
 
             return user;
@@ -35,7 +35,7 @@ namespace Shift.Server.Repositories.Implementations
         public async Task<Task> PartialUpdateAsync(string username, UserPartialUpdate fields)
         {
             var feryvUser = await _feryvUserRepository.ReadWhereAsync(username);
-            return PartialUpdateAsync((user) => user.FeryvUserId.Equals(feryvUser.Id),
+            return PartialUpdateAsync((user) => user.Id.Equals(feryvUser.Id),
                 (user) =>
                 {
                     user.Admin = fields.Admin ?? user.Admin;

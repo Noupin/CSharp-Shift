@@ -22,7 +22,7 @@ namespace Shift.Server.Repositories.Implementations
         public async Task<List<ShiftSQL>?> ReadWhereAsync(string username, int page, int pageSize)
         {
             var feryvUser = await _feryvUserRepository.ReadWhereAsync(username);
-            return await ReadWhereAsync((shift) => shift.Author.FeryvUserId.Equals(feryvUser.Id),
+            return await ReadWhereAsync((shift) => shift.Author.Id.Equals(feryvUser.Id),
                 page, pageSize);
         }
 

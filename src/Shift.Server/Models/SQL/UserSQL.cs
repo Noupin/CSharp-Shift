@@ -11,8 +11,6 @@ namespace Shift.Server.Models.SQL
         [Required]
         public Guid Id { get; set; }
         [Required]
-        public Guid FeryvUserId { get; set; }
-        [Required]
         public bool Admin { get; set; }
         [Required]
         public bool CanTrain { get; set; }

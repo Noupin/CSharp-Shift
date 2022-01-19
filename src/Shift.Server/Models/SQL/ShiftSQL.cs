@@ -38,6 +38,6 @@ namespace Shift.Server.Models.SQL
         [Required]
         public int Views { get; set; } = 0;
 
-        public List<CategorySQL> Categories { get; set; }
+        public ICollection<ShiftCategorySQL> ShiftCategories { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace Shift.Server.Models.SQL
         [Required]
         [StringLength(Constants.MaximumShiftCategoryTitleLength)]
         public string Name { get; set; }
-        public List<ShiftSQL> Shifts { get; set; }
+        public ICollection<ShiftCategorySQL> ShiftCategories { get; set; }
     }
 }
