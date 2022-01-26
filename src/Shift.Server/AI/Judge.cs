@@ -27,11 +27,11 @@ namespace Shift.Server.AI
             base(inputShape, keras.layers.Dense(1, activation: outputActivation), optimizer, loss, name, args)
         {
             AddLayer(keras.layers.Flatten(), -1);
-            AddDifferntiatorLayer(tf.nn.relu);
+            AddJudgeLayer(tf.nn.relu);
 
         }
 
-        public void AddDifferntiatorLayer(Activation activation, int filters=24,
+        public void AddJudgeLayer(Activation activation, int filters=24,
             int kernelSize=3, int strides=2, string padding="same", int index=-2,
             bool withoutDropout=true, float dropoutRate=0.3f)
         {
