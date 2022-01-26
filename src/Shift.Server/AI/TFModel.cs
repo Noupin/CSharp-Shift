@@ -18,11 +18,11 @@ namespace Shift.Server.AI
 	/// </summary>
     public class TFModel : Model
     {
-        private List<ILayer> _modelLayers = new List<ILayer>();
-        private ILossFunc _loss;
-        private OptimizerV2 _optimizer;
-        private Shape _inputShape;
-        private string _modelName;
+        protected List<ILayer> _modelLayers = new List<ILayer>();
+        protected ILossFunc _loss;
+        protected OptimizerV2 _optimizer;
+        protected Shape _inputShape;
+        protected string _modelName;
 
         public TFModel(Shape inputShape, ILayer outputLayer, OptimizerV2 optimizer,
             ILossFunc loss, string name, ModelArgs? args) : base(args)
